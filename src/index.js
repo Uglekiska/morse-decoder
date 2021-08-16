@@ -35,10 +35,22 @@ const MORSE_TABLE = {
     '---..':  '8',
     '----.':  '9',
     '-----':  '0',
+    ' ' : ' ',
 };
 
 function decode(expr) {
-    // write your solution here
+
+    return expr.match(/.{1,10}/g).map((el) => {
+        return el.substring(el.search('1')).match(/.{1,2}/g)
+    }).map((el) => {
+        return el[0] === '**' ? [' '] : el;
+    }).map((el2) => {
+        return el2.map(element => {
+            return element == '10' ? '.' : element == '11' ? '-' : ' '
+        }).join('');
+    }).map((el) => {
+        return Object.values(MORSE_TABLE)[Object.keys(MORSE_TABLE).indexOf(el)]
+    }).join('')
 }
 
 module.exports = {
